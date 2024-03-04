@@ -1,11 +1,11 @@
-class bac_Note {
-  String matriculeBac;
-  double note;
-  String refCodeMatiere;
-  String refCodeMatiereLibelleFr;
-  String anneeBac;
+class BacNote {
+  final String matriculeBac;
+  final double note;
+  final String refCodeMatiere;
+  final String refCodeMatiereLibelleFr;
+  final String anneeBac;
 
-  bac_Note({
+  BacNote({
     required this.matriculeBac,
     required this.note,
     required this.refCodeMatiere,
@@ -13,8 +13,8 @@ class bac_Note {
     required this.anneeBac,
   });
 
-  factory bac_Note.fromJson(Map<String, dynamic> json) {
-    return bac_Note(
+  factory BacNote.fromJson(Map<String, dynamic> json) {
+    return BacNote(
       matriculeBac: json['matriculeBac'],
       note: json['note'],
       refCodeMatiere: json['refCodeMatiere'],
