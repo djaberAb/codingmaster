@@ -1,18 +1,54 @@
+import 'dart:ffi';
+
 class BacDia {
-  String nomGroupePedagogique;
-  int idSection;
-  String codeSection;
-  String nomSection;
-  int refGroupeId;
-  DateTime dateAffectation;
-  DateTime dateNaissanceEtudiant;
-  double moyenneBac;
-  double lastMoyenne;
-  int periodeId;
-  String periodeCode;
-  String periodeLibelleLongLt;
+  final Long idd;
+  final Long dossierInscriptionId;
+  final Long dossierEtudiantId;
+  final Long individuId;
+  final String individuIdentifiant;
+  final String nomEtudiant;
+  final String prenomEtudiant;
+  final String nomEtudiantArabe;
+  final String prenomEtudiantArabe;
+  final String numeroMatricule;
+  final String numeroInscription;
+  final String etudiantCivilite;
+  final String urlPhoto;
+  final String etudiantSexe;
+  final Long groupePedagogiqueId;
+  final String codeGroupePedagogique;
+  final String nomGroupePedagogique;
+  final int idSection;
+  final String codeSection;
+  final String nomSection;
+  final int refGroupeId;
+  final DateTime dateAffectation;
+  final DateTime dateNaissanceEtudiant;
+  final double moyenneBac;
+  final double lastMoyenne;
+  final int periodeId;
+  final String periodeCode;
+  final String periodeLibelleLongLt;
 
   BacDia({
+    required..idd,
+    required.this.dossierInscriptionId,
+    required.this.dossierEtudiantId,
+    required.this.individuI,
+    required.this.individuIdentifiant,
+    required.this.nomEtudiant,
+    required.this.prenomEtudiant,
+    required.this.nomEtudiantArabe,
+    required.this.prenomEtudiantArabe,
+    required.this.numeroMatricule,
+    required.this.numeroInscription,
+    required.this.etudiantCivilite,
+    required.this.urlPhoto,
+    required.this.etudiantSexe,
+    required.this.groupePedagogiqueId,
+    required.this.codeGroupePedagogique,
+
+
     required this.nomGroupePedagogique,
     required this.idSection,
     required this.codeSection,
