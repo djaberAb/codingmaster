@@ -1,3 +1,6 @@
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 class BacNote {
   final String matriculeBac;
   final double note;
@@ -16,20 +19,21 @@ class BacNote {
   factory BacNote.fromJson(Map<String, dynamic> json) {
     return BacNote(
       matriculeBac: json['matriculeBac'],
-      note: json['note'],
+      note: json['note'].toDouble(),
       refCodeMatiere: json['refCodeMatiere'],
       refCodeMatiereLibelleFr: json['refCodeMatiereLibelleFr'],
       anneeBac: json['anneeBac'],
     );
   }
+}
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['matriculeBac'] = matriculeBac;
-    data['note'] = note;
-    data['refCodeMatiere'] = refCodeMatiere;
-    data['refCodeMatiereLibelleFr'] = refCodeMatiereLibelleFr;
-    data['anneeBac'] = anneeBac;
-    return data;
+Future<List<BacNote>> fetchBacNotes(String uuid) async {
+  final response = await http.get(Uri.parse('https://progres.mesrs.dz/api/infos/bac/$uuid/notes'));
+
+  if (response.statusCode == 200) {
+    final List<dynamic> responseData = json.decode(response.body);
+    return responseData.map((noteJson) => BacNote.fromJson(noteJson)).toList();
+  } else {
+    throw Exception('Failed to load bac notes');
   }
 }
