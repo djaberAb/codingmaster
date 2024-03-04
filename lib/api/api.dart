@@ -17,15 +17,23 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    fetchData();
+    fetchDataAuth();
   }
 
-  Future<void> fetchData() async {
+  Future<void> fetchDataAuth() async {
     try {
-      final response = await http.post(Uri.parse('https://progres.mesrs.dz/api/authentication/v1/'));
+      final response = await http.post(
+        Uri.parse('https://progres.mesrs.dz/api/authentication/v1/'),
+        body: {
+          'username': 'your_username ',
+          'password': 'your_password',
+        },
+      );
       if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        final authToken = responseData['token'];
         setState(() {
-          _response = jsonDecode(response.body);
+          _response = authToken;
         });
       } else {
         setState(() {
