@@ -1,26 +1,29 @@
-class bac_Info {
- final int id;
- final String nin;
- final double matricule;
- final String nomAr;
- final String prenomAr;
- final String nomFr;
- final String prenomFr;
- final DateTime dateNaissance;
- final String moyenneBac;
- final String prenomPere;
- final String nomPrenomMere;
- final String telephone;
- final String adresseResidence;
- final String refCodeSexe;
- final String refCodeWilayaNaissance;
- final String refCodeWilayaBac;
- final String refCodeWilayaResidence;
- final String refCodeSerieBac;
- final String libelleVilleNaissance;
- final String libelleSerieBac;
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-  bac_Info({
+class BaccalaureateDossier {
+  final int id;
+  final String nin;
+  final double matricule;
+  final String nomAr;
+  final String prenomAr;
+  final String nomFr;
+  final String prenomFr;
+  final DateTime dateNaissance;
+  final String moyenneBac;
+  final String prenomPere;
+  final String nomPrenomMere;
+  final String telephone;
+  final String adresseResidence;
+  final String refCodeSexe;
+  final String refCodeWilayaNaissance;
+  final String refCodeWilayaBac;
+  final String refCodeWilayaResidence;
+  final String refCodeSerieBac;
+  final String libelleVilleNaissance;
+  final String libelleSerieBac;
+
+  BaccalaureateDossier({
     required this.id,
     required this.nin,
     required this.matricule,
@@ -43,11 +46,11 @@ class bac_Info {
     required this.libelleSerieBac,
   });
 
-  factory bac_Info.fromJson(Map<String, dynamic> json) {
-    return bac_Info(
-      id: json['Id'],
-      nin: json['Nin'],
-      matricule: json['Matricule'],
+  factory BaccalaureateDossier.fromJson(Map<String, dynamic> json) {
+    return BaccalaureateDossier(
+      id: json['id'],
+      nin: json['nin'],
+      matricule: json['matricule'],
       nomAr: json['nomAr'],
       prenomAr: json['prenomAr'],
       nomFr: json['nomFr'],
@@ -56,7 +59,7 @@ class bac_Info {
       moyenneBac: json['moyenneBac'],
       prenomPere: json['prenomPere'],
       nomPrenomMere: json['nomPrenomMere'],
-      telephone: json['Telephone'],
+      telephone: json['telephone'],
       adresseResidence: json['adresseResidence'],
       refCodeSexe: json['refCodeSexe'],
       refCodeWilayaNaissance: json['refCodeWilayaNaissance'],
@@ -67,29 +70,15 @@ class bac_Info {
       libelleSerieBac: json['libelleSerieBac'],
     );
   }
+}
 
-  Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['Id'] = id;
-    data['Nin'] = nin;
-    data['Matricule'] = matricule;
-    data['nomAr'] = nomAr;
-    data['prenomAr'] = prenomAr;
-    data['nomFr'] = nomFr;
-    data['prenomFr'] = prenomFr;
-    data['dateNaissance'] = dateNaissance.toIso8601String();
-    data['moyenneBac'] = moyenneBac;
-    data['prenomPere'] = prenomPere;
-    data['nomPrenomMere'] = nomPrenomMere;
-    data['Telephone'] = telephone;
-    data['adresseResidence'] = adresseResidence;
-    data['refCodeSexe'] = refCodeSexe;
-    data['refCodeWilayaNaissance'] = refCodeWilayaNaissance;
-    data['refCodeWilayaBac'] = refCodeWilayaBac;
-    data['refCodeWilayaResidence'] = refCodeWilayaResidence;
-    data['refCodeSerieBac'] = refCodeSerieBac;
-    data['libelleVilleNaissance'] = libelleVilleNaissance;
-    data['libelleSerieBac'] = libelleSerieBac;
-    return data;
+Future<BaccalaureateDossier> fetchBaccalaureateDossier(String uuid) async {
+  final response = await http.get(Uri.parse('https://progres.mesrs.dz/api/infos/bac/$uuid/'));
+
+  if (response.statusCode == 200) {
+    final responseData = json.decode(response.body);
+    return BaccalaureateDossier.fromJson(responseData);
+  } else {
+    throw Exception('Failed to load baccalaureate dossier');
   }
 }
